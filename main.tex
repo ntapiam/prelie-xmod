@@ -1,0 +1,106 @@
+\documentclass[noamsfonts, reqno]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{mlmodern, microtype, mleftright}
+\usepackage{mathtools, thmtools, bookmark, cite, amssymb}
+\usepackage[nameinlink]{cleveref}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[ocgcolorlinks]{ocgx2}
+\usepackage[bb=boondox, scr=boondox, bfbb]{mathalfa}
+\usepackage[margin={3cm, 2cm}, a4paper]{geometry}
+\usepackage[foot]{amsaddr}
+\hypersetup{linkcolor=BrickRed, citecolor=RoyalBlue}
+
+\usepackage{tikz-cd}
+
+\usepackage[mathlines]{lineno}
+
+\linenumbers
+\mleftright
+
+%% ENVIRONMENTS
+\declaretheorem[numberwithin=section]{proposition}
+
+%% SHORTCUTS
+\newcommand{\catpl}{\mathsf{PreLie}}
+\newcommand{\prelie}{\mathbin{\vartriangleright}}
+\newcommand{\preliealt}{\mathbin{\blacktriangleright}}
+\newcommand{\laction}{\mathbin{\vartriangleright_{\mathrm{L}}}}
+\newcommand{\raction}{\mathbin{\vartriangleleft_{\mathrm{R}}}}
+
+\begin{document}
+\title[Types of crossed modules]{A survey on types of crossed modules}
+\author[J.~Diehl]{Joscha Diehl}
+\address{University of Greifswald}
+\author[K.~Ebrahimi-Fard]{Kurusch Ebrahimi-Fard}
+\address{Norwegian University of Science and Technology}
+\author[N.~Tapia]{Nikolas Tapia}
+\address{Weierstrass Institute}
+\address{HU Berlin}
+\date{March 30, 2025}
+
+\maketitle
+
+\section{Introduction}
+\label{s:intro}
+
+\section{Crossed modules of pre-Lie algebras}
+We take the point of view of \cite{LRW2024}.
+In this framework, a pre-Lie crossed module is a pre-Lie structure on a two term chain complex \((\partial\colon T_1\to T_0)\).
+This means we have a chain map \(\prelie\colon(T_1\to T_0)\otimes(T_1\to T_0)\to(T_1\to T_0)\) whose associator
+\[
+  \mathrm{a}_{\prelie}\coloneqq\prelie\circ(\prelie\otimes\mathrm{id}) - \prelie\circ(\mathrm{id}\otimes\prelie)
+\]
+is left-symmetric, i.e., \(\mathrm{a}_{\prelie}=\mathrm{a}_{\prelie}\circ(\tau\otimes\mathrm{id})\),
+and the following rectangle and all its inner squares commute:
+
+\[
+  \begin{tikzcd}
+  T_1\otimes T_1\ar[r,"\partial^\otimes"]\ar[d,"\prelie"]&T_1\otimes T_0\oplus T_0\otimes T_1\ar[d,"\prelie"]\ar[r,"\partial^\otimes"]&T_0\otimes T_0\ar[d,"\prelie"]\\
+  0\ar[r]&T_1\ar[r,"\partial"]&T_0
+  \end{tikzcd}
+\]
+where \(\partial^\otimes(x\otimes y) = \partial(x)\otimes y+(-1)^{|x||y|}x\otimes\partial(y)\).
+
+Unpacking this definition by restricting to each degree we see that, equivalently, this definition corresponds to a pre-Lie algebra \(\prelie\colon T_0\otimes T_0\to T_0\) together with a pre-Lie module structure \(\laction\colon T_0\otimes T_1\to T_1\), \(\raction\colon T_1\otimes T_0\to T_1\) and a map \(\partial\colon T_1\to T_0\) satsifying, for all \(s,t\in T_0\) and \(\mathscr{s},\mathscr{t}\in T_1\):
+\begin{align}
+  (s\prelie t-t\prelie s)\laction\mathscr{t} &= s\laction(t\laction\mathscr{t}) - t\laction(s\laction\mathscr{t})\tag{M1}\label{eq:m1}\\
+  (s\laction \mathscr{t})\raction t - s\laction(\mathscr{t}\raction t) &= (\mathscr{t}\raction s)\raction t - \mathscr{t}\raction(s\prelie t)\tag{M2}\label{eq:m2},
+\end{align}
+and the equivariance and Peiffer relations
+\begin{align}
+  \partial(s\laction\mathscr{s}+\mathscr{t}\raction t) &= s\prelie\partial(\mathscr{s}) + \partial(\mathscr{t})\prelie t\tag{EQUI}\label{eq:equi}\\
+  \partial(\mathscr{s})\laction\mathscr{t} &= \mathscr{s}\raction\partial(\mathscr{t})\tag{PEIF}\label{eq:peif}.
+\end{align}
+
+\begin{proposition}
+Define the map \(\preliealt\colon T_1\otimes T_1\to T_1\) by
+\[
+  \mathscr{s}\preliealt\mathscr{t}\coloneqq\partial(\mathscr{s})\laction\mathscr{t}.
+\]
+Then \(T_1\) is a pre-Lie algebra and \(\partial\colon T_1\to T_0\) is a pre-Lie morphism.
+\end{proposition}
+
+We stress the fact that this second pre-Lie product is not immediately defined by the pre-Lie structure on the complex \((\partial\colon T_1\to T_0)\) but has to be defined a posteriori.
+
+\begin{proof}
+  To see that \(T_1\) is a pre-Lie algebra it suffices to note that by \cref{eq:m1} the associator
+  \[
+    \mathrm{a}_{\preliealt}(\mathscr{r},\mathscr{s},\mathscr{t}) = \mathrm{a}_{\prelie}(\partial(\mathscr{r}),\partial(\mathscr{s}),\mathscr{t})
+  \]
+  and thus it is left-symmetric.
+  The second statement follows immediately from \cref{eq:equi}.
+\end{proof}
+\subsection{Pre-Lie crossed modules as internal categories}
+Consider now the category \(\catpl\) of pre-Lie algebras with pre-Lie morphisms.
+An internal category in \(\catpl\) is a pair \((C_0, C_1)\) of a pre-Lie algebra \((C_0,\prelie)\) of ``objects'' and a pre-Lie algebra \((C_1,\preliealt)\) of ``arrows'', maps \(s,t\colon C_1\to C_0\), the source and the target, an identity map \(i\colon C_0\to C_1\) and a composition \(\circ\colon C_1\times_{s,t} C_1\to C_1\) satisfying the standard axioms of a category, with all maps but the composition being pre-Lie morphisms.
+The composition however satisfies the so-called \emph{interchange law}: whenever \(f,g,h,k\in C_1\) are composable
+\[
+  (f\circ g)\preliealt(h\circ k) = (f\preliealt h)\circ(g\preliealt k).
+\]
+
+\bibliographystyle{arxivalpha}
+\bibliography{references}
+\end{document}
+
+
