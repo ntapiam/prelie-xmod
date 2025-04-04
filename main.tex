@@ -14,12 +14,53 @@
 \usepackage{tikz-cd}
 
 \usepackage[mathlines]{lineno}
+\usepackage{mathbbol}
+\newcommand\sDC{\mathcolor{cyan}{\mathsf{s}}}
+\newcommand\s{\mathsf{s}}
+\newcommand\tDC{\mathcolor{cyan}{\mathsf{t}}}
+\renewcommand\t{\mathsf{t}}
+\newcommand\iDC{\mathcolor{cyan}{\mathsf{i}}}
+\renewcommand\i{\mathsf{i}}
+\DeclareMathSymbol{\COMP}{\mathrel}{bbold}{\lq\;}
+% composition in double category:
+\DeclareMathSymbol{\rawCOMPDC}{\mathrel}{bbold}{\lq\;}
+\newcommand{\COMPDC}{\mathcolor{cyan}{\rawCOMPDC}}
+\newcommand{\COMPTC}{\mathcolor{pink}{\rawCOMPDC}}
+\newcommand\id{\operatorname{id}}
+\newcommand{\marginfootnote}[1]{\marginpar{~\\ \footnotemark}\footnotetext{#1}}
+\newcommand\references[1]{\marginfootnote{References: #1}}
+% \usepackage{showlabels}
+% \pagecolor{my-yellow}
+\newcommand\REF[1]{\references{#1}}
+\newcommand\DEF[1]{\textbf{#1}}
+\newcommand\feedbackGG{\tau}        % Lie group   -> Lie group
+\newcommand\feedbackAA{\mathfrak t}        % Lie algebra -> Lie algebra
+\newcommand\actionGG{\triangleright}             % Lie group   -> Aut(Lie group)
+\usepackage{ifdraft}
+\ifdraft
+{
+\newcommand\actionGA{{\dot m}}      % Lie group   -> Aut(Lie algebra)
+\newcommand\actionAA{{\ddot m}}     % Lie algebra -> Der(Lie algebra)
+}{
+\newcommand\actionGA{%
+	\overset{\text{\tikz[baseline]{\draw[fill=white] (0,0) circle (1pt);\fill (0.12,0) circle (1pt);}}}{m}%
+}
+\newcommand\actionAA{%
+	\overset{\text{\tikz[baseline]{\fill (0,0) circle (1pt);\fill (0.12,0) circle (1pt);}}}{m}%
+}
+}
+\newcommand\im{\operatorname{im}}
 
-\linenumbers
+% \linenumbers
 \mleftright
 
 %% ENVIRONMENTS
 \declaretheorem[numberwithin=section]{proposition}
+\declaretheorem[numberwithin=section]{lemma}
+% definition
+\declaretheorem[numberwithin=section]{definition}
+\declaretheorem[numberwithin=section]{remark}
+\declaretheorem[numberwithin=section]{theorem}
 
 %% SHORTCUTS
 \newcommand{\catpl}{\mathsf{PreLie}}
@@ -99,8 +140,417 @@ The composition however satisfies the so-called \emph{interchange law}: whenever
   (f\circ g)\preliealt(h\circ k) = (f\preliealt h)\circ(g\preliealt k).
 \]
 
-\bibliographystyle{arxivalpha}
+\bibliographystyle{alpha}
 \bibliography{references}
+
+\appendix
+
+\section{Appendix}
+
+
+
+\newcommand\CAT{\underline{\mathbf{Cat}}}
+\newcommand\GRP{\underline{\mathbf{Grp}}}
+\newcommand\GRPD{\underline{\mathbf{Grpd}}}
+\newcommand\SET{\underline{\mathbf{Set}}}
+\newcommand\obj{\mathsf{obj}}
+\renewcommand\hom{\mathsf{hom}}
+
+\newcommand\mGO{\magenta{\mathsf{m}}}
+\newcommand\eGO{\magenta{\mathsf{e}}}
+\newcommand\uGO{\magenta{\mathsf{u}}}
+\newcommand\groupUnit{\mathsf{e}}
+
+Let $\mathcal A$ be a category with pullbacks.
+A \DEF{category internal to $\mathcal A$} or
+a \DEF{category object in $\mathcal A$} 
+consists of
+\begin{itemize}
+	\item an object of objects $C_0 \in \mathcal A$,
+	\item an object of arrows $C_1 \in \mathcal A$,
+\end{itemize}
+together with
+\begin{itemize}
+	\item source and target morphisms $\sDC,\tDC: C_1 \to C_0$,
+	\item an identity-assigning morphism $\iDC: C_0 \to C_1$,
+	\item
+	% a composition morphism $\circ: C_1 \times_{C_0} C_1 \to C_1$,
+	a composition morphism $\COMPDC: C_1 \times_{C_0} C_1 \to C_1$,
+		where
+		% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBoBGAXVJADcBDAGwFcYkQBhAfXJAF9S6TLnyEU5CtTpNW7bsX6CQGbHgJEJxKQxZtEnHvykwoAc3hFQAMwBOEALZIyIHBCQTpu9jhA1G9ACMYRgAFYTUxEBssUwALHwFrO0dEACYaV3caHVl9BD5KPiA
+		\begin{center}
+		\begin{tikzcd}
+			& C_1 \arrow[d, "\sDC"] \\
+			C_1 \arrow[r, "\tDC"'] & C_0               
+		\end{tikzcd}
+		\end{center}
+
+\end{itemize}
+such that we have
+\begin{itemize}
+
+\item
+``\textbf{ $\sDC(\iDC(x)) = x = \tDC(\iDC(x))$}''\newline
+Precisely, the following commute
+\begin{center}
+% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAGEB9YkAX1PSZc+QigCMpMVVqMWbLj36DseAkQmVq9Zq0QdOYvgJAYVIogCZy07XL0Kjy4WpQBmSTdm79i46eeiyO6aMjryBnzSMFAA5vBEoABmAE4QALZIZCA4EEgSoXYgADpFWFCcwAq8INQMdABGMAwACkKqoiDJWDEAFjiOICnpmdQ5SFYF3iVYACLsA0MZiBNjiPm2U0VwcwupS+7ZuYgALFpebNPlldzVtQ1NrWYund19u8OIB6sArGdhetMdkpBnskL9DkhTpMLkUcECKLwgA
+\begin{tikzcd}
+	C_0 \arrow[rd, "\id_{C_0}"'] \arrow[r, "\iDC"] & C_1 \arrow[d, "\sDC"] & C_0 \arrow[rd, "\id_{C_0}"'] \arrow[r, "\iDC"] & C_1 \arrow[d, "\tDC"] \\
+												   & C_0                   &                                                & C_0                  
+\end{tikzcd}
+\end{center}
+
+\item 
+``\textbf{ $\sDC( f \COMPDC g ) = \sDC(f)$ and $\tDC( f \COMPDC g ) = \tDC(g)$}''\newline
+Precisely, the following commute
+\begin{center}
+% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAGEB9ARgAIAdfngC28TsC7EAvry7cQU0uky58hFGW5VajFmzkKlIDNjwEi3Ulur1mrRB07FDy02ovlttvQ4OLXquYoAEyeNrr2jnyCImISTjJ+RiaB6sih1jp2+jwuxipmaQDMVl4ROc7++W5ByCWU4dm+uVLaMFAA5vBEoABmAE4QwkhkIDgQSJZZPiCC7ADyALIACgAi7HkDQ5PU40ih05GCcOubg8OIo3uIJYdsgmhYLUZbF7fXB95H-CcbVa9IAAsuwmiAArI0ZnMlms-i9zkgIWNQQA2SHfHCnf4IxDA5FIADs6Pu-EenGCZ22iCJ+MQaLuDhiWIoUiAA
+\begin{tikzcd}
+	C_1 \times_{C_0} C_1 \arrow[d, "\COMPDC"] \arrow[r, "\pi_1"] & C_1 \arrow[d, "\sDC"] & C_1 \times_{C_0} C_1 \arrow[d, "\COMPDC"] \arrow[r, "\pi_2"] & C_1 \arrow[d, "\tDC"] \\
+	C_1 \arrow[r, "\sDC"]                                        & C_0                   & C_1 \arrow[r, "\tDC"]                                        & C_0                  
+\end{tikzcd}
+\end{center}
+where $\pi_1, \pi_2$ are the projections, i.e. the maps in the pullback square
+\begin{center}
+	\begin{tikzcd}
+		C_1 \times_{C_0} C_1 \arrow[d, "\pi_1"'] \arrow[r, "\pi_2"] & C_1 \arrow[d, "\sDC"] \\
+		C_1 \arrow[r, "\tDC"']                                        & C_0
+	\end{tikzcd}
+\end{center}
+
+\item
+``\textbf{ $f \COMPDC \iDC( \tDC(f) ) = f = \iDC( \sDC(f) ) \COMPDC f$}''\newline
+Precisely, the following commute
+\begin{center}
+% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAGEB9YgAgB0+eALbxOwLsQC+PLgEYQk0uky58hFLPJVajFmzn9BWEXDETpchUpAZseAkU2zt9Zq0QdO8xcrtqiAExa1K56HgYCwqLi3BbcCtowUADm8ESgAGYAThBCSJogOBBIAT4g2blIZIXFiAWh7iACWAAi7IZRpjFShlhQZl6SVpk5eYjVRSUhuo0CaFicASDUDHQARjAMAAoq9uogWVjJABY4w+WjSADM1JN1025szf0xspKRxvC9bcsgqxvbXb+DyHE5nMoVMY3GpTHSPDxzBbeCiSIA
+\begin{tikzcd}
+	C_0 \times_{C_0} C_1 \arrow[r, "\iDC \times_{C_0} \id_{C_1}"] \arrow[rd, "\pi_2"'] & C_1 \times_{C_0} C_1 \arrow[d] & C_1 \times_{C_0} C_0 \arrow[l, "\id_{C_1}\times \iDC"'] \arrow[ld, "\pi_1"] \\
+																					   & C_1                            &                                                                            
+\end{tikzcd}
+\end{center}
+Here, overloading notation, $\pi_1, \pi_2$ are the projections in both these pullback squares:
+\begin{center}
+	\begin{tikzcd}
+		C_0 \times_{C_0} C_1 \arrow[d, "\pi_1"'] \arrow[r, "\pi_2"] & C_1 \arrow[d, "\sDC"] \\
+		C_0 \arrow[r, "\id_{C_0}"']                                   & C_0                  
+	\end{tikzcd}
+	\begin{tikzcd}
+		C_1 \times_{C_0} C_0 \arrow[d, "\pi_1"'] \arrow[r, "\pi_2"] & C_0 \arrow[d, "\id_{C_0}"] \\
+		C_1 \arrow[r, "\tDC"']                                       & C_0                  
+	\end{tikzcd}
+\end{center}
+Furthermore, $\iDC \times_{C_0} \id_{C_1}: C_0 \times_{C_0} C_1 \to C_1 \times_{C_0} C_1$ is the unique arrow making the following commute
+\begin{center}
+% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZARgBpiBdUkANwEMAbAVxiRAGEB9ABgAIAdfngC28TsC7cAvry7EQU0uky58hFGQBMVWoxZtJCpSAzY8BImQDMO+s1aIOneYuVm1RTaW3U7+x4auJirm6shelL56Dk4uxqaqFijcpNy20QbOgiJiEjwycgo6MFAA5vBEoABmAE4QwkgpIDgQSAAsQbX1SGTNrYhWUfZsglhQ4pJSINQMdABGMAwACiEejjVYpQAWOEbVdQ2IbdQtSIO6w46CcAAi7HsgXYe9p4heF-4go3cPT0jvr3Ofhi2R+M3mixW7iSIA2212nQOjRO-QArDMsGAYlA6HAtiVph8QfwsHcBEIsKI4BN8uSxjTiFNwQtlqsYZjsLBfkjEOi+v9qAswFAkABaKzSYx-Xko9qCmDCs6S-bdRBNV6MihSIA
+\begin{tikzcd}
+	C_1\times_{C_0} C_1 \arrow[rddd, bend right] \arrow[rrd, bend left] &                                                                                                        &                       \\
+																		& C_0 \times_{C_0} C_1 \arrow[r] \arrow[lu, "\iDC \times_{C_0} \id_{C_1}" description, dashed] \arrow[d] & C_1 \arrow[d, "\sDC"] \\
+																		& C_0 \arrow[r, "\id_{C_0}"'] \arrow[d, "\iDC"]                                                          & C_0                   \\
+																		& C_1 \arrow[ru, "\tDC"']                                                                                &                      
+\end{tikzcd}
+\end{center}
+
+
+\item
+``\textbf{ $(f \COMPDC g) \COMPDC h = f \COMPDC (g \COMPDC h)$}''\newline
+Precisely, 
+these are some large pullback diagrams.
+\REF{ see also \url{https://math.stackexchange.com/questions/2046276/associativity-of-pullbacks} }
+
+\end{itemize}
+
+
+\begin{theorem}
+	\label{thm:category_internal}
+	The category of internal categories in $\mathcal A$ and internal functors between them form a category.
+	Moreover, with internal natural transformations we obtain a (strict) $2$-category.
+\end{theorem}
+\begin{proof}
+	\cite[Proposition 8.1.4]{borceux1994handbook}
+\end{proof}
+
+\bigskip
+
+\subsection{Groups}~
+
+\begin{lemma}
+	\label{lem:AHcommute}
+	\REF{ \cite{brown1976g} }
+
+	$G$ a category object in $\GRP$.
+	%\begin{align*}
+	%	A := \ker \tDC, \quad H := \ker \sDC.
+	%\end{align*}
+	% Then $A$ and $H$ commute.
+	Then $\ker \tDC$ and $\ker \sDC$ commute.
+
+\end{lemma}
+\begin{proof}
+
+	First, $\iDC(\groupUnit_{G_0}) = \groupUnit_{G_1}$
+	since $\iDC$ is a group morphism.
+	For $a \in \ker \tDC, h \in \sDC$ we then have
+	\begin{align*}
+		a \COMPDC h
+		&=
+		(\groupUnit_{G_1} a) \COMPDC (h \groupUnit_{G_1}) \\
+		&=
+		(\groupUnit_{G_1} \COMPDC h) (a \COMPDC \groupUnit_{G_1}) \\
+		&=
+		h a \\
+		a \COMPDC h
+		&=
+		(a \groupUnit_{G_1}) \COMPDC (\groupUnit_{G_1} h) \\
+		&=
+		(a \COMPDC \groupUnit_{G_1}) (\groupUnit_{G_1} \COMPDC h) \\
+		&=
+		a h.
+	\end{align*}
+	
+\end{proof}
+
+
+\begin{definition}
+	$F: \mathcal C \to \mathcal D$ is an \textbf{equivalence of categories} if there is a functor $G: \mathcal D \to \mathcal C$ and natural isomorphisms
+	\begin{align*}
+		\epsilon: G\COMP F \Rightarrow \id_{\mathcal D}, \qquad \eta: \id_{\mathcal C} \Rightarrow F\COMP G.
+	\end{align*}
+\end{definition}
+
+\begin{theorem}
+	\label{thm:double_group_crossed_module}
+	\REF{ \cite{forrester2002group}, but it is missing the proof of the Peiffer identity. }
+	Given 
+	a crossed module of groups
+	$(\feedbackGG: H \to G, \actionGG)$,
+	the following
+	\footnote{Note the, maybe surprising, order $h'h$
+	in the definition of $\COMPDC$.
+	This would look ``correct'' if we had used 
+	the usual composition $b \circ a = a \COMP b$.}
+	\begin{align*}
+		G_1 &:= H \rtimes G \\
+		G_0 &:= G \\
+		\sDC( h,g ) &:= g \\
+		\tDC( h,g ) &:= \feedbackGG(h) g \\
+		\iDC( g ) &:= (\groupUnit_H, g) \\
+		(h,g) \COMPDC (h',g') &:= (h' h, g),
+	\end{align*}
+	defines a category in $\GRP$.
+
+	\medskip
+
+	Given a category in $\GRP$
+	\begin{center}
+	% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAHEB9ARhAF9S6TLnyEU3clVqMWbLsX5SYUAObwioAGYAnCAFskZEDghIJIOAAssmnEgC0AJmr1mrRMf6CQO-YeomZtRWNnaIztJubAjUDHQARjAMAArCeARs2lgqlnYCWroGiOaBiEZxiSlpomxYYNiwIC4y7iBYinxAA
+	\begin{tikzcd}
+		G_1 \arrow[r, "\tDC", shift left=2] \arrow[r, "\sDC"', shift right=2] & G_0 \arrow[l, "\iDC" description]
+	\end{tikzcd}
+	\end{center}
+	the following defines a crossed module of groups
+	\begin{align*}
+		H                 &:= \ker \sDC \\
+		G                 &:= G_0 \\
+		\feedbackGG( h )  &:= \tDC(h) \\
+		\actionGG_g( h )  &:= \iDC(g)\,h\,\iDC(g)^{-1}.
+	\end{align*}
+
+	The two constructions give an equivalence of categories, between
+	the category of categories in $\GRP$
+	(with internal functors as morphisms, \Cref{thm:category_internal})
+	and the category of crossed modules of groups, with crossed morphisms as morphisms.
+	% Then the double category of shells over $G$ is equivalent to the double category of shells over $H$.	
+\end{theorem}
+\begin{proof}
+	First claim:
+	we only verify that $\COMPDC$ is a group morphism
+	\begin{align*}
+		G_1 \times_{G_0} G_1 \to G_1,
+	\end{align*}
+	where
+	\begin{align*}
+		G_1 \times_{G_0} G_1 = \{ ( (h,g), (k, \feedbackGG(h) g) ) \in G_1^2 \}.
+	\end{align*}
+	Now
+	\begin{align*}
+		(h,g)   \COMPDC (k, \feedbackGG(h) g)    &= (k h, g) \\
+		(h',g') \COMPDC (k', \feedbackGG(h') g') &= (k' h', g).
+	\end{align*}
+	So 
+	\begin{align*}
+		( (h,g)   \COMPDC (k, \feedbackGG(h) g) ) \bullet ( (h',g') \COMPDC (k', \feedbackGG(h') g') )
+		&=
+		(k h \actionGG_g( k' h' ), g g').
+	\end{align*}
+	On the other hand
+	\begin{align*}
+		( (h,g)\bullet (h',g') ) \COMPDC ( (k, \feedbackGG(h) g) \bullet (k', \feedbackGG(h') g') )
+		&=
+		(h \actionGG_g(h'), g g') \COMPDC (k \actionGG_{\feedbackGG(h) g}(k'), \feedbackGG(h) g \feedbackGG(h') g') \\
+		&=
+		(k \actionGG_{\feedbackGG(h) g}(k') h \actionGG_g(h'), g g') \\
+		&=
+		(k \actionGG_{\feedbackGG(h)}( \actionGG_g(k') ) h \actionGG_g(h'), g g') \\
+		&=	
+		(k h \actionGG_g(k') h^{-1} h \actionGG_g(h'), g g') \\
+		&=
+		(k h \actionGG_g(k') \actionGG_g(h'), g g') \\
+		&=
+		(k h \actionGG_g(k' h'), g g'),
+	\end{align*}
+	as desired.
+
+	Second claim:
+	we verify the Peiffer identity.
+	Let $h, h' \in H = \ker \sDC$.
+	Then $a := \iDC(\feedbackGG(h))^{-1} h \in \ker \tDC$.
+	By \Cref{lem:AHcommute} we hence have
+	\begin{align*}
+		\iDC\big(\feedbackGG(h)\big)^{-1}\ h\ h'
+		=
+		h'\ \iDC\big(\feedbackGG(h)\big)^{-1}\ h 
+	\end{align*}
+	i.e.
+	\begin{align*}
+		h\ h'\ h^{-1}
+		=
+		\iDC\big(\feedbackGG(h)\big)\ h'\ \iDC\big(\feedbackGG(h)\big)^{-1}
+		=
+		\actionGG_{\feedbackGG(h)}(h').
+	\end{align*}
+	% \url{https://photos.google.com/photo/AF1QipPp6OOgnmJomC4j1nNbQhc08PU8IpRvuAxy0CHn}
+
+	We skip the details of the proof of the equivalence of categories.
+\end{proof}
+
+\begin{remark}
+	One can show that the
+	category of groups
+	in the category of groups in some category $C$
+	is equivalent to the category of abelian groups in C.
+	\REF{ \url{https://categorytheory.zulipchat.com/\#narrow/stream/229199-learning.3A-questions/topic/internalizing.20structures.20obtained.20by.20internalization/near/462750428} }
+\end{remark}
+
+\begin{definition}
+	\REF{\cite[Section 1.1]{loday1982spaces}}
+	A \DEF{$\mathsf{cat}^1$-group}
+	is a triple $(G,s,t)$ where $G$ is a group
+	and $s,t$ a group endomorphism of $G$ such that
+	\begin{enumerate}
+		\item 
+		$t \COMP s = t, \quad s \COMP t = s$,
+	\item
+		$[\ker s, \ker t] = 1$.
+	\end{enumerate}
+\end{definition}
+
+\begin{theorem}
+
+	Given a $\mathsf{cat}^1$-group,
+	the following
+	\begin{align*}
+		G_1       &:= G \\
+		G_0       &:= \im s \\
+		\sDC( x ) &:= s(x) \\
+		\tDC( x ) &:= t(x) \\
+		\iDC( g ) &:= \text{ embedding of the subgroup $\im s$ } \\
+		x \COMPDC x' &:= x' \iDC(\sDC(x'))^{-1} x,
+	\end{align*}
+	defines a category in $\GRP$.
+
+\end{theorem}
+\begin{proof}
+	We note that $s$ is idemptotent:
+	\begin{align}
+		s \COMP s
+		=
+		s \COMP t \COMP s
+		=
+		s \COMP t
+		=
+		s.
+		\label{eq:s_square}
+	\end{align}
+
+	\bigskip
+
+	First, $\tDC$ is well-defined, 
+	since $t(G) = s(t(G)) \subset \im s$.
+
+	Then for $y = s(x) \in \im s$,
+	\begin{align*}
+		\tDC(\iDC(y))
+		&= 
+		\tDC(\iDC(s(x)))
+		=
+		\tDC(s(x))
+		=
+		t(s(x)) = s(x) = y, \\
+		%%%%%
+		\sDC(\iDC(y))
+		&=
+		\sDC(\iDC(s(x)))
+		=
+		\sDC(s(x))
+		=
+		s(s(x))
+		=
+		s(x) = y,
+	\end{align*}
+	where we used \eqref{eq:s_square}.
+
+	\textbf{Properties of $\COMPDC$}
+
+	If $\tDC(x) = \sDC(x')$,
+	\begin{align*}
+		\tDC( x \COMPDC x' )
+		&=
+		\tDC( x' \iDC(\sDC(x'))^{-1} x ) \\
+		% =
+		% \tDC( x' ) \tDC( \iDC(\sDC(x'))^{-1} ) \tDC( x ) \\
+		&=
+		\tDC( x' ) \sDC(x')^{-1} ) \tDC( x )
+		=
+		\tDC( x' ) \\
+		%%%%%%%%%
+		\sDC( x \COMPDC x' )
+		&=
+		\sDC( x' \iDC(\sDC(x'))^{-1} x ) \\
+		&=
+		\sDC( x' ) \sDC(x')^{-1} \sDC( x )
+		=
+		\sDC(x).
+	\end{align*}
+	Further,
+	if also $\tDC(y) = \sDC(y')$,
+	\begin{align*}
+		(x \COMPDC x')  (y \COMPDC y')
+		=
+		x' \iDC(\sDC(x'))^{-1} x y' \iDC(\sDC(y'))^{-1} y.
+	\end{align*}
+	Since
+	\begin{align*}
+		\tDC( \iDC(\sDC(x'))^{-1} x )
+		&=
+		\sDC(x')^{-1} \tDC(x)
+		=
+		1 \\
+		\sDC( y' \iDC(\sDC(y'))^{-1} )
+		&=
+		\sDC(y') \sDC(y')^{-1} = 1.
+	\end{align*}
+	Hence, by assumption, the two elements commute and we continue
+	\begin{align*}
+		(x \COMPDC x')  (y \COMPDC y')
+		=
+		x' y' \iDC(\sDC(y'))^{-1} \iDC(\sDC(x'))^{-1} x y.
+		=
+		x' y' \iDC(\sDC(x'y'))^{-1} x y.
+		=
+		(x y) \COMPDC (x' y').
+	\end{align*}
+	
+\end{proof}
+
+
 \end{document}
-
-
