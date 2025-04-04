@@ -154,7 +154,7 @@ Given a pre-Lie algebra \((L, \prelie)\) and a vector space \(V\), set
 \]
 with action
 \[
-  s\laction(t_1\dotsm t_n\otimes v)\coloneqq st_1\dotsm t_n\otimes v + \sum_{j=1}^nt_1\dotsm(s\prelie t_j)\dotsm t_n\otimes v.
+  s\laction(A\otimes v)\coloneqq sA\otimes v + s\prelie A\otimes v
 \]
 \begin{proposition}
   \((\mathcal{M}_L(V),\laction)\) is a pre-Lie module over \(L\).
@@ -163,18 +163,18 @@ with action
   Let \(r,s,t_1\dotsm t_n\in L\) and \(v\in V\).
   Then
   \begin{align*}
-    r\laction(s\laction (t_1\dotsm t_n\otimes v)) &= r\laction(st_1\dotsm t_n\otimes v + \sum_{j=1}^nt_1\dotsm(s\prelie t_j)\dotsm t_n\otimes v)\\
-                                                  &= \begin{multlined}[t]rst_1\dotsm t_n\otimes v+(r\prelie s)t_1\dotsm t_n\otimes v+\sum_{i=1}^n st_1\dotsm(r\prelie t_j)\dotsm t_n\otimes v \\ +\sum_{j=1}^nrt_1\dotsm(s\prelie t_j)\dotsm t_n\otimes v  +\sum_{1\le i\neq j \le n}t_1\dotsm(r\prelie t_i)\dotsm(s\prelie t_j)\dotsm t_n\otimes v \\ +\sum_{i=1}^n t_1\dotsm(r\prelie(s\prelie t_j))\dotsm t_n\otimes v.
+    r\laction(s\laction (A\otimes v)) &= r\laction(sA\otimes v + s\prelie A\otimes v)\\
+                                                  &= \begin{multlined}[t]rsA\otimes v+(r\prelie s)A\otimes v+\sum_{i=1}^n s(r\prelie A)\otimes v \\ +r(s\prelie A)\otimes v  + r\prelie(s\prelie A)\otimes v
                                                   \end{multlined}
   \end{align*}
 
   Subtracting \(s\laction(r\laction(t_1\dotsm t_n\otimes v))\) from this expression we are left with
   \[
-    (r\prelie s-s\prelie r)t_1\dotsm t_n\otimes v + \sum_{i=1}^nt_1\dotsm\Bigl( r\prelie(s\prelie t_i) - s\prelie(r\prelie t_i) \Bigr)\dotsm t_n\otimes v
+    (r\prelie s-s\prelie r)A\otimes v + \left( r\prelie(s\prelie A) - s\prelie(r\prelie A) \right)\otimes v
   \]
-  which equals
+  which, since \(r\prelie (s\prelie A) - s\prelie(r\prelie A) = (r\prelie s - s\prelie r)\prelie A\), equals
   \[
-    (r\prelie s - s\prelie r)\laction\left( t_1\dotsm t_n\otimes v \right).\qedhere
+    (r\prelie s - s\prelie r)\laction\left( A\otimes v \right).\qedhere
   \]
 \end{proof}
 
