@@ -57,7 +57,7 @@
 %% ENVIRONMENTS
 \declaretheorem[numberwithin=section]{proposition}
 \declaretheorem[sibling=proposition]{theorem, lemma, corollary}
-\declaretheorem[sibling=proposition, style=definition]{remark}
+\declaretheorem[sibling=proposition, style=definition]{remark, definition}
 
 %% SHORTCUTS
 \newcommand{\catpl}{\mathsf{PreLie}}
@@ -338,7 +338,7 @@ these are some large pullback diagrams.
 
 	$G$ a category object in $\GRP$.
 	%\begin{align*}
-	%	A := \ker \tDC, \quad H := \ker \sDC.
+	%	A \coloneqq \ker \tDC, \quad H \coloneqq \ker \sDC.
 	%\end{align*}
 	% Then $A$ and $H$ commute.
 	Then $\ker \tDC$ and $\ker \sDC$ commute.
@@ -388,12 +388,12 @@ these are some large pullback diagrams.
 	This would look ``correct'' if we had used 
 	the usual composition $b \circ a = a \COMP b$.}
 	\begin{align*}
-		G_1 &:= H \rtimes G \\
-		G_0 &:= G \\
-		\sDC( h,g ) &:= g \\
-		\tDC( h,g ) &:= \feedbackGG(h) g \\
-		\iDC( g ) &:= (\groupUnit_H, g) \\
-		(h,g) \COMPDC (h',g') &:= (h' h, g),
+		G_1 &\coloneqq H \rtimes G \\
+		G_0 &\coloneqq G \\
+		\sDC( h,g ) &\coloneqq g \\
+		\tDC( h,g ) &\coloneqq \feedbackGG(h) g \\
+		\iDC( g ) &\coloneqq (\groupUnit_H, g) \\
+		(h,g) \COMPDC (h',g') &\coloneqq (h' h, g),
 	\end{align*}
 	defines a category in $\GRP$.
 
@@ -408,10 +408,10 @@ these are some large pullback diagrams.
 	\end{center}
 	the following defines a crossed module of groups
 	\begin{align*}
-		H                 &:= \ker \sDC \\
-		G                 &:= G_0 \\
-		\feedbackGG( h )  &:= \tDC(h) \\
-		\actionGG_g( h )  &:= \iDC(g)\,h\,\iDC(g)^{-1}.
+		H                 &\coloneqq \ker \sDC \\
+		G                 &\coloneqq G_0 \\
+		\feedbackGG( h )  &\coloneqq \tDC(h) \\
+		\actionGG_g( h )  &\coloneqq \iDC(g)\,h\,\iDC(g)^{-1}.
 	\end{align*}
 
 	The two constructions give an equivalence of categories, between
@@ -462,7 +462,7 @@ these are some large pullback diagrams.
 	Second claim:
 	we verify the Peiffer identity.
 	Let $h, h' \in H = \ker \sDC$.
-	Then $a := \iDC(\feedbackGG(h))^{-1} h \in \ker \tDC$.
+	Then $a \coloneqq \iDC(\feedbackGG(h))^{-1} h \in \ker \tDC$.
 	By \Cref{lem:AHcommute} we hence have
 	\begin{align*}
 		\iDC\big(\feedbackGG(h)\big)^{-1}\ h\ h'
@@ -508,12 +508,12 @@ these are some large pullback diagrams.
 	Given a $\mathsf{cat}^1$-group,
 	the following
 	\begin{align*}
-		G_1       &:= G \\
-		G_0       &:= \im s \\
-		\sDC( x ) &:= s(x) \\
-		\tDC( x ) &:= t(x) \\
-		\iDC( g ) &:= \text{ embedding of the subgroup $\im s$ } \\
-		x \COMPDC x' &:= x' \iDC(\sDC(x'))^{-1} x,
+		G_1       &\coloneqq G \\
+		G_0       &\coloneqq \im s \\
+		\sDC( x ) &\coloneqq s(x) \\
+		\tDC( x ) &\coloneqq t(x) \\
+		\iDC( g ) &\coloneqq \text{ embedding of the subgroup $\im s$ } \\
+		x \COMPDC x' &\coloneqq x' \iDC(\sDC(x'))^{-1} x,
 	\end{align*}
 	defines a category in $\GRP$.
 
