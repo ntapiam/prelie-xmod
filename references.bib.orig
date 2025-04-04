@@ -7,6 +7,7 @@
 	year={2024},
 }
 
+<<<<<<< HEAD
 @book{borceux1994handbook,
   title={Handbook of categorical algebra: volume 1, Basic category theory},
   author={Borceux, Francis},
@@ -24,6 +25,9 @@
   year={1976},
   organization={North-Holland}
 }
+||||||| parent of 95c430e (free pre-Lie module)
+
+=======
 @article{CL2001,
 	title = {Pre-Lie algebras and the rooted trees operad},
 	author = {Chapoton, Frédéric and Livernet, Muriel},
@@ -34,6 +38,7 @@
 	doi = {10.1155/S1073792801000198},
 	year={2001},
 }}
+>>>>>>> 95c430e (free pre-Lie module)
 
 @article{forrester2002group,
   title={Group objects and internal categories},

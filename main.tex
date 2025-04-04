@@ -56,11 +56,8 @@
 
 %% ENVIRONMENTS
 \declaretheorem[numberwithin=section]{proposition}
-\declaretheorem[numberwithin=section]{lemma}
-% definition
-\declaretheorem[numberwithin=section]{definition}
-\declaretheorem[numberwithin=section]{remark}
-\declaretheorem[numberwithin=section]{theorem}
+\declaretheorem[sibling=proposition]{theorem, lemma, corollary}
+\declaretheorem[sibling=proposition, style=definition]{remark}
 
 %% SHORTCUTS
 \newcommand{\catpl}{\mathsf{PreLie}}
@@ -85,6 +82,9 @@
 \section{Introduction}
 \label{s:intro}
 
+\section{Preliminaries}
+
+
 \section{Crossed modules of pre-Lie algebras}
 We take the point of view of \cite{LRW2024}.
 In this framework, a pre-Lie crossed module is a pre-Lie structure on a two term chain complex \((\partial\colon T_1\to T_0)\).
@@ -92,7 +92,7 @@ This means we have a chain map \(\prelie\colon(T_1\to T_0)\otimes(T_1\to T_0)\to
 \[
   \mathrm{a}_{\prelie}\coloneqq\prelie\circ(\prelie\otimes\mathrm{id}) - \prelie\circ(\mathrm{id}\otimes\prelie)
 \]
-is left-symmetric, i.e., \(\mathrm{a}_{\prelie}=\mathrm{a}_{\prelie}\circ(\tau\otimes\mathrm{id})\),
+is left symmetric, i.e., \(\mathrm{a}_{\prelie}=\mathrm{a}_{\prelie}\circ(\tau\otimes\mathrm{id})\),
 and the following rectangle and all its inner squares commute:
 
 \[
@@ -103,7 +103,7 @@ and the following rectangle and all its inner squares commute:
 \]
 where \(\partial^\otimes(x\otimes y) = \partial(x)\otimes y+(-1)^{|x||y|}x\otimes\partial(y)\).
 
-Unpacking this definition by restricting to each degree we see that, equivalently, this definition corresponds to a pre-Lie algebra \(\prelie\colon T_0\otimes T_0\to T_0\) together with a pre-Lie module structure \(\laction\colon T_0\otimes T_1\to T_1\), \(\raction\colon T_1\otimes T_0\to T_1\) and a map \(\partial\colon T_1\to T_0\) satsifying, for all \(s,t\in T_0\) and \(\mathscr{s},\mathscr{t}\in T_1\):
+Unpacking this definition by restricting to each degree we see that, equivalently, it corresponds to a pre-Lie algebra \(\prelie\colon T_0\otimes T_0\to T_0\) together with a left pre-Lie module structure \(\laction\colon T_0\otimes T_1\to T_1\), a right action \(\raction\colon T_1\otimes T_0\to T_1\) and a map \(\partial\colon T_1\to T_0\) satsifying, for all \(s,t\in T_0\) and \(\mathscr{s},\mathscr{t}\in T_1\):
 \begin{align}
   (s\prelie t-t\prelie s)\laction\mathscr{t} &= s\laction(t\laction\mathscr{t}) - t\laction(s\laction\mathscr{t})\tag{M1}\label{eq:m1}\\
   (s\laction \mathscr{t})\raction t - s\laction(\mathscr{t}\raction t) &= (\mathscr{t}\raction s)\raction t - \mathscr{t}\raction(s\prelie t)\tag{M2}\label{eq:m2},
@@ -122,26 +122,84 @@ Define the map \(\preliealt\colon T_1\otimes T_1\to T_1\) by
 Then \(T_1\) is a pre-Lie algebra and \(\partial\colon T_1\to T_0\) is a pre-Lie morphism.
 \end{proposition}
 
-We stress the fact that this second pre-Lie product is not immediately defined by the pre-Lie structure on the complex \((\partial\colon T_1\to T_0)\) but has to be defined a posteriori.
+We stress the fact that this second pre-Lie product is not immediately defined by the pre-Lie structure on the complex \((\partial\colon T_1\to T_0)\) but has to be introduced a posteriori.
 
 \begin{proof}
-  To see that \(T_1\) is a pre-Lie algebra it suffices to note that by \cref{eq:m1} the associator
-  \[
-    \mathrm{a}_{\preliealt}(\mathscr{r},\mathscr{s},\mathscr{t}) = \mathrm{a}_{\prelie}(\partial(\mathscr{r}),\partial(\mathscr{s}),\mathscr{t})
-  \]
-  and thus it is left-symmetric.
+  To see that \(T_1\) is a pre-Lie algebra it suffices to note that by \cref{eq:equi} the associator
+  \begin{align*}
+    \mathrm{a}_{\preliealt}(\mathscr{r},\mathscr{s},\mathscr{t}) &=\partial(\partial(\mathscr{r})\laction\mathscr{s})\laction\mathscr{t}-\partial(\mathscr{r})\laction(\partial(\mathscr{s})\laction\mathscr{t})\\
+                                                                 &= (\partial(\mathscr{r})\prelie\partial(\mathscr{s}))\laction\mathscr{t}-\partial(\mathscr{r})\laction(\partial(\mathscr{s})\laction\mathscr{t})
+  \end{align*}
+  and thus it is left symmetric by \cref{eq:m1}.
   The second statement follows immediately from \cref{eq:equi}.
 \end{proof}
+
+\begin{remark}
+  This notion seems to be a 2-term \(\text{pre-Lie}_\infty\) algebra as introduced in \cite{CL2001}.
+\end{remark}
 \subsection{Pre-Lie crossed modules as internal categories}
 Consider now the category \(\catpl\) of pre-Lie algebras with pre-Lie morphisms.
-An internal category in \(\catpl\) is a pair \((C_0, C_1)\) of a pre-Lie algebra \((C_0,\prelie)\) of ``objects'' and a pre-Lie algebra \((C_1,\preliealt)\) of ``arrows'', maps \(s,t\colon C_1\to C_0\), the source and the target, an identity map \(i\colon C_0\to C_1\) and a composition \(\circ\colon C_1\times_{s,t} C_1\to C_1\) satisfying the standard axioms of a category, with all maps
-being pre-Lie morphisms.
-In particular the composition satisfies the so-called \emph{interchange law}: whenever \(f,g,h,k\in C_1\) are composable
+An internal category in \(\catpl\) is a pair \((C_0, C_1)\) of a pre-Lie algebra \((C_0,\prelie)\) of ``objects'' and a pre-Lie algebra \((C_1,\preliealt)\) of ``arrows'', maps \(s,t\colon C_1\to C_0\), the source and the target, an identity map \(i\colon C_0\to C_1\) and a composition \(\circ\colon C_1\times_{s,t} C_1\to C_1\) satisfying the standard axioms of a category, with all maps being pre-Lie morphisms.
+The composition however satisfies the so-called \emph{interchange law}: whenever \(f,g,h,k\in C_1\) are composable
 \[
   (f\circ g)\preliealt(h\circ k) = (f\preliealt h)\circ(g\preliealt k).
 \]
 
-\bibliographystyle{alpha}
+
+\subsection{Free pre-Lie crossed modules}
+We begin by constructing the free pre-Lie module over a vector space.
+Given a pre-Lie algebra \((L, \prelie)\) and a vector space \(V\), set
+\[
+  \mathcal{M}_L(V)\coloneqq S(L)\otimes V
+\]
+with action
+\[
+  s\laction(t_1\dotsm t_n\otimes v)\coloneqq st_1\dotsm t_n\otimes v + \sum_{j=1}^nt_1\dotsm(s\prelie t_j)\dotsm t_n\otimes v.
+\]
+\begin{proposition}
+  \((\mathcal{M}_L(V),\laction)\) is a pre-Lie module over \(L\).
+\end{proposition}
+\begin{proof}
+  Let \(r,s,t_1\dotsm t_n\in L\) and \(v\in V\).
+  Then
+  \begin{align*}
+    r\laction(s\laction (t_1\dotsm t_n\otimes v)) &= r\laction(st_1\dotsm t_n\otimes v + \sum_{j=1}^nt_1\dotsm(s\prelie t_j)\dotsm t_n\otimes v)\\
+                                                  &= \begin{multlined}[t]rst_1\dotsm t_n\otimes v+(r\prelie s)t_1\dotsm t_n\otimes v+\sum_{i=1}^n st_1\dotsm(r\prelie t_j)\dotsm t_n\otimes v \\ +\sum_{j=1}^nrt_1\dotsm(s\prelie t_j)\dotsm t_n\otimes v  +\sum_{1\le i\neq j \le n}t_1\dotsm(r\prelie t_i)\dotsm(s\prelie t_j)\dotsm t_n\otimes v \\ +\sum_{i=1}^n t_1\dotsm(r\prelie(s\prelie t_j))\dotsm t_n\otimes v.
+                                                  \end{multlined}
+  \end{align*}
+
+  Subtracting \(s\laction(r\laction(t_1\dotsm t_n\otimes v))\) from this expression we are left with
+  \[
+    (r\prelie s-s\prelie r)t_1\dotsm t_n\otimes v + \sum_{i=1}^nt_1\dotsm\Bigl( r\prelie(s\prelie t_i) - s\prelie(r\prelie t_i) \Bigr)\dotsm t_n\otimes v
+  \]
+  which equals
+  \[
+    (r\prelie s - s\prelie r)\laction\left( t_1\dotsm t_n\otimes v \right).\qedhere
+  \]
+\end{proof}
+
+\begin{theorem}
+  \((\mathcal{M}_L(V),\laction)\) is the free pre-Lie module over \(V\).
+\end{theorem}
+\begin{proof}
+  Let \((N,\circ_{\mathrm{L}})\) be another pre-Lie module over \(L\) and \(\varphi\in \operatorname{Hom}_{\mathsf{Vect}}(V,N)\).
+  Define the extension \(\hat{\varphi}\colon \mathcal{M}_L(V)\to N\) recursively by
+  \begin{align*}
+    \hat{\varphi}(1\otimes v) &\coloneqq \varphi(v)\\
+    \hat{\varphi}(tA\otimes v) &\coloneqq t\circ_{\mathrm{L}}\hat{\varphi}(A\otimes v) - \hat{\varphi}(t\prelie A\otimes v).
+  \end{align*}
+  for \(t\in L, A\in S(L)\).
+
+  If \(t\in L\) and \(A\in S(L)\) then
+  \begin{align*}
+    \hat{\varphi}(t\laction (A\otimes v)) &= \hat{\varphi}\left( tA\otimes v + t\prelie A\otimes v \right)\\
+                                          &= t\circ_{\mathrm{L}}\hat{\varphi}(A\otimes v) - \hat{\varphi}(t\prelie A\otimes v) + \hat{\varphi}(t\prelie A\otimes v) \\
+                                          &= t\circ_{\mathrm{L}}\hat{\varphi}(A\otimes v).
+  \end{align*}
+  so \(\hat{\varphi}\) is a morphism of pre-Lie modules.
+\end{proof}
+
+\bibliographystyle{arxivalpha}
 \bibliography{references}
 
 \appendix
