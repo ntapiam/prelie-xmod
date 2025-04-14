@@ -83,18 +83,81 @@
 \label{s:intro}
 
 \section{Preliminaries}
+\subsection{pre-Lie algebras}
+In this section we recall some definitions and facts about pre-Lie algebras that we will use in the following sections.
+\begin{definition}
+  A (left) pre-Lie algebra is a pair \((L,\prelie)\) with \(L\) a vector space and \(\prelie\colon L\otimes L\to L\) a bilinear operation such that the associator
+  \begin{equation}\label{eq:PL}
+    \mathrm{a}_{\prelie}(x,y,z)\coloneqq (x\prelie y)\prelie z - x\prelie(y\prelie z)\tag{PL}
+  \end{equation}
+  is left symmetric, i.e., such that \(\mathrm{a}_{\prelie}(x,y,z) = \mathrm{a}_{\prelie}(y,x,z)\) for all \(x,y,z\in L\).
+\end{definition}
 
+It can be show that for any pre-Lie algebra \((L,\prelie)\) the pair \(\mathfrak{g}_L\coloneqq(L,[-,-])\) where the bracket
+\[
+  [x,y]\coloneqq x\prelie y - y\prelie x
+\]
+is always a Lie algebra, called the \emph{subadjacent Lie algebra of \(L\)}.
+
+We now recall the Oudom-Guin construction of the universal enveloping algebra of \(L\), identifying as the Hopf algebra \((S(L),\ast,\Delta)\) where \(\Delta\) is the standard coproduct on \(S(L)\) and the associative product \(\ast\) is defined below.
+As usual, we will use Sweedler's notation for the coproduct:
+\[
+  \Delta A = A_{(1)}\otimes A_{(2)},\quad A\in S(L).
+\]
+\begin{definition}
+  The pre-Lie operation is extended to \(\prelie\colon S(L)\otimes S(L)\to S(L)\) via \(1\prelie A \coloneqq 0, A\prelie 1 \coloneqq A\), and recursively
+  \begin{align}
+    xA\prelie B &\coloneqq x\prelie (A\prelie B) - (x\prelie A)\prelie B,\label{eq:OG1}\tag{OG1}\\
+    A\prelie BC &\coloneqq (A_{(1)}\prelie B)(A_{(2)}\prelie C).\label{eq:OG2}\tag{OG2}
+  \end{align}
+\end{definition}
+
+We observe that if \(x\in L\), the mapping \(\ell_{x\prelie}\colon S(L)\to S(L)\) is the unique derivation extending \(\prelie\) to \(S(L)\), that is,
+\[
+  \ell_{x\prelie}(y_1\dotsm y_n) = \sum_{j=1}^{n}y_1\dotsm\ell_{x\prelie}(y_j)\dotsm y_n.
+\]
+
+\begin{definition}
+  On \(S(L)\) define the product
+  \[
+    A\ast B \coloneqq (A_{(1)}\prelie B)A_{(2)}.
+  \]
+\end{definition}
+
+We note that from \cref{eq:OG2} it follows that
+\[
+  A\ast x_1\dotsm x_n = (A_{(1)}\prelie x_1)\dotsm(A_{(n)}\prelie x_n)A_{(n+1)}
+\]
+which gives a slightly more direct way of computing \(A\ast B\).
+
+\begin{proposition}
+  \label{prop:laction}
+  Define \(\laction\colon L \otimes S(L) \to S(L)\) by
+  \[
+    x\laction A \coloneqq xA + x\prelie A.
+  \]
+  Then \(S(L)\) is a left pre-Lie module over \(L\).
+\end{proposition}
+\begin{proof}
+  Let \(x,y\in L\) and \(A\in S(L)\).
+  Then
+  \begin{align*}
+    x\laction(y\laction A) &= x\laction(yA + y\prelie A) \\
+    &= xyA + (x\prelie y)A + y(x\prelie A) + x(y\prelie A) + x\prelie(y\prelie A).
+  \end{align*}
+  Hence
+  \begin{align*}
+    x\laction(y\laction A) - y\laction(x\laction A) &= (x\prelie y - y\prelie x)A + (x\prelie y - y\prelie x)\prelie A \\
+    &= (x\prelie y - y\prelie x)\laction A,
+  \end{align*}
+  where we have used that \(x\prelie (y\prelie A) = xy\prelie A + (x\prelie y)\prelie A\) which follows immediately from \cref{eq:OG1}.
+\end{proof}
 
 \section{Crossed modules of pre-Lie algebras}
 We take the point of view of \cite{LRW2024}.
 In this framework, a pre-Lie crossed module is a pre-Lie structure on a two term chain complex \((\partial\colon T_1\to T_0)\).
-This means we have a chain map \(\prelie\colon(T_1\to T_0)\otimes(T_1\to T_0)\to(T_1\to T_0)\) whose associator
-\[
-  \mathrm{a}_{\prelie}\coloneqq\prelie\circ(\prelie\otimes\mathrm{id}) - \prelie\circ(\mathrm{id}\otimes\prelie)
-\]
-is left symmetric, i.e., \(\mathrm{a}_{\prelie}=\mathrm{a}_{\prelie}\circ(\tau\otimes\mathrm{id})\),
+This means we have a chain map \(\prelie\colon(T_1\to T_0)\otimes(T_1\to T_0)\to(T_1\to T_0)\) whose associator satisfies \cref{eq:PL}
 and the following rectangle and all its inner squares commute:
-
 \[
   \begin{tikzcd}
   T_1\otimes T_1\ar[r,"\partial^\otimes"]\ar[d,"\prelie"]&T_1\otimes T_0\oplus T_0\otimes T_1\ar[d,"\prelie"]\ar[r,"\partial^\otimes"]&T_0\otimes T_0\ar[d,"\prelie"]\\
