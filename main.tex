@@ -245,6 +245,45 @@ From \cref{prop:laction} we readily obtain the following result.
   so \(\hat{\varphi}\) is a morphism of pre-Lie modules.
 \end{proof}
 
+We now define a right action of \(L\) on \(\mathcal{M}_L(V)\) by
+\[
+  (A\otimes v)\raction s \coloneqq sA\otimes v + (A\prelie s)\otimes v.
+\]
+\begin{proposition}
+  The triple \((\mathcal{M}_L(V),\laction,\raction)\) satisfies \cref{eq:m1,eq:m2}.
+\end{proposition}
+\begin{proof}
+  We only need to check \cref{eq:m2} as \cref{eq:m1} is \Cref{prop:MLV.left}.
+  Let \(s,t\in L\), \(A\in S(L)\) and \(v\in V\).
+  On the one hand
+  \begin{align*}
+    (s\laction(A\otimes v))\raction t &= (sA\otimes v +(s\prelie A)\otimes v)\raction t \\
+    &= stA\otimes v + (sA\prelie t)\otimes v + t(s\prelie A)\otimes v + ((s\prelie A)\prelie t)\otimes v \\
+    &= stA\otimes v + t(s\prelie A)\otimes v + (s\prelie(A\prelie t))\otimes v
+  \end{align*}
+  by \cref{eq:OG1}.
+  On the other hand
+  \begin{align*}
+    s\laction((A\otimes v)\raction t) &= s\laction(tA\otimes v + (A\prelie t)\otimes v) \\
+    &= stA\otimes v + (s\prelie tA)\otimes v + s(A\prelie t)\otimes v + s\prelie(A\prelie t) \otimes v.
+  \end{align*}
+  Hence
+  \[
+    (s\laction(A\otimes v))\raction t - s\laction((A\otimes v)\raction t) = (s\prelie t)A\otimes v - s(A\prelie t)\otimes v
+  \]
+  by \cref{eq:OG2}.
+
+  But we may also directly compute
+  \begin{align*}
+    ((A\otimes v)\raction s)\raction t &= (sA\otimes v + (A\prelie s)\otimes v)\raction t \\
+    &= stA\otimes v + (sA\prelie t)\otimes v + t(A\prelie s)\otimes v + ((A\prelie s)\prelie t)\otimes v \\
+  \end{align*}
+  and
+  \begin{align*}
+    (A\otimes v)\raction(s\prelie t) &= (s\prelie t)A\otimes v + (A\prelie(s\prelie t))\otimes v \\
+  \end{align*}
+\end{proof}
+
 \bibliographystyle{arxivalpha}
 \bibliography{references}
 
